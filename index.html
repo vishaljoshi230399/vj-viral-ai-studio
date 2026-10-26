@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>VJ Viral AI Studio</title>
+  <meta name="description" content="A free, GitHub-hosted content planning and approval dashboard.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">VJ</div>
+    <div>
+      <h1>VJ Viral AI Studio</h1>
+      <p class="subtitle">Plan · Create · Review · Grow</p>
+    </div>
+    <span class="free-pill">FREE WORKSPACE</span>
+  </header>
+
+  <main class="container">
+    <section class="notice">
+      <strong>Approval-first mode</strong>
+      <p>This app does not publish anything automatically. Your ideas and draft posts are stored in this browser on this device. Do not enter passwords, access tokens, or private account credentials.</p>
+    </section>
+
+    <section class="stats-grid" aria-label="Workspace summary">
+      <article class="stat-card"><span>Ideas</span><strong id="ideaCount">0</strong></article>
+      <article class="stat-card"><span>Draft posts</span><strong id="draftCount">0</strong></article>
+      <article class="stat-card"><span>Awaiting review</span><strong id="reviewCount">0</strong></article>
+      <article class="stat-card"><span>Published (tracked)</span><strong id="publishedCount">0</strong></article>
+    </section>
+
+    <nav class="tabs" aria-label="Main sections">
+      <button class="tab active" data-tab="create">Create content</button>
+      <button class="tab" data-tab="queue">Approval queue</button>
+      <button class="tab" data-tab="analytics">Growth tracker</button>
+      <button class="tab" data-tab="settings">Backup & tools</button>
+    </nav>
+
+    <section class="panel active" id="panel-create">
+      <div class="section-heading">
+        <div><p class="eyebrow">CONTENT FACTORY</p><h2>Make your next batch</h2></div>
+      </div>
+      <form id="ideaForm" class="form-card">
+        <label for="topic">Topic or source-video subject</label>
+        <input id="topic" required maxlength="180" placeholder="e.g. 5 free AI tools for creators">
+        <div class="form-row">
+          <div>
+            <label for="niche">Niche</label>
+            <select id="niche">
+              <option>Digital marketing and AI</option>
+              <option>Technology tutorials</option>
+              <option>Devotional and Sanatan content</option>
+              <option>Entertainment and trends</option>
+              <option>Education and facts</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="count">Number of concepts</label>
+            <select id="count">
+              <option>5</option><option selected>10</option>
+            </select>
+          </div>
+        </div>
+        <label for="audience">Audience or language (optional)</label>
+        <input id="audience" maxlength="120" placeholder="e.g. Hindi-speaking beginners in India">
+        <button class="primary" type="submit">Generate content concepts</button>
+        <p class="small muted">This free first version uses local templates, not an external AI model. Review all suggestions before using them.</p>
+      </form>
+
+      <div class="tool-links">
+        <a href="https://trends.google.com/trends/" target="_blank" rel="noopener">Explore Google Trends ↗</a>
+        <a href="https://www.youtube.com/feed/trending" target="_blank" rel="noopener">Explore YouTube ↗</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Explore Instagram ↗</a>
+        <a href="https://www.facebook.com/reel/" target="_blank" rel="noopener">Explore Facebook Reels ↗</a>
+      </div>
+      <div id="generated" class="content-grid"></div>
+    </section>
+
+    <section class="panel" id="panel-queue">
+      <div class="section-heading"><div><p class="eyebrow">MANUAL REVIEW</p><h2>Approval queue</h2></div></div>
+      <p class="muted">Approve a draft to mark it ready for you to publish. Approval does not post it to a social network.</p>
+      <div id="queueList" class="stack"></div>
+    </section>
+
+    <section class="panel" id="panel-analytics">
+      <div class="section-heading"><div><p class="eyebrow">MEASURE WHAT WORKS</p><h2>Growth tracker</h2></div></div>
+      <p class="muted">Add the real numbers from each platform's creator dashboard after you publish. Results are stored locally in this browser.</p>
+      <form id="metricsForm" class="form-card">
+        <label for="metricPost">Post / video title</label>
+        <input id="metricPost" required maxlength="180" placeholder="Name of the video">
+        <div class="form-row three">
+          <div><label for="views">Views</label><input id="views" type="number" min="0" value="0" required></div>
+          <div><label for="likes">Likes</label><input id="likes" type="number" min="0" value="0" required></div>
+          <div><label for="shares">Shares</label><input id="shares" type="number" min="0" value="0" required></div>
+        </div>
+        <div class="form-row">
+          <div><label for="platform">Platform</label><select id="platform"><option>YouTube Shorts</option><option>Instagram Reels</option><option>Facebook Reels</option></select></div>
+          <div><label for="followers">Followers gained</label><input id="followers" type="number" min="0" value="0" required></div>
+        </div>
+        <button class="primary" type="submit">Save performance</button>
+      </form>
+      <div id="metricsList" class="stack"></div>
+    </section>
+
+    <section class="panel" id="panel-settings">
+      <div class="section-heading"><div><p class="eyebrow">YOUR DATA</p><h2>Backup & tools</h2></div></div>
+      <div class="form-card">
+        <h3>Backup your workspace</h3>
+        <p class="muted">Export ideas, drafts, and metrics to a JSON file. Save it somewhere safe. Use Import to restore a previous backup.</p>
+        <div class="button-row">
+          <button class="primary" id="exportBtn" type="button">Export backup</button>
+          <label class="file-button">Import backup<input id="importFile" type="file" accept="application/json"></label>
+        </div>
+        <hr>
+        <h3>Clear local workspace</h3>
+        <p class="muted">This removes the data stored by this app in this browser. Export a backup first if you need it.</p>
+        <button class="danger" id="clearBtn" type="button">Clear all local data</button>
+      </div>
+      <div class="form-card">
+        <h3>Security checklist</h3>
+        <ul class="checklist">
+          <li>Never put API keys, social passwords, or access tokens in HTML or JavaScript.</li>
+          <li>GitHub Pages files are public when published from a public repository.</li>
+          <li>Only connect social accounts through official OAuth consent screens in a future backend integration.</li>
+          <li>Review footage rights, audio rights, captions, and each platform's rules before posting.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer><span>VJ Viral AI Studio</span><span>Free-first · Local storage · Human approval</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
